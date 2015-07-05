@@ -41,6 +41,10 @@
 #include "ruby_atomic.h"
 #include "ccan/list/list.h"
 
+#if OPT_JIT_COMPILER
+#include "jit.h"
+#endif
+
 #include "ruby/thread_native.h"
 #if   defined(_WIN32)
 #include "thread_win32.h"

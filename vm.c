@@ -2517,6 +2517,10 @@ Init_VM(void)
     rb_undef_method(CLASS_OF(rb_cRubyVM), "new");
     rb_define_singleton_method(rb_cRubyVM, "stat", vm_stat, -1);
 
+#if OPT_JIT_COMPILER
+    rb_jit_init();
+#endif
+
     /* FrozenCore (hidden) */
     fcore = rb_class_new(rb_cBasicObject);
     RBASIC(fcore)->flags = T_ICLASS;

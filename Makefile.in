@@ -73,7 +73,7 @@ LDFLAGS = @STATIC@ $(CFLAGS) @LDFLAGS@
 EXTLDFLAGS = @EXTLDFLAGS@
 XLDFLAGS = @XLDFLAGS@ $(EXTLDFLAGS)
 EXTLIBS =
-LIBS = @LIBS@ $(EXTLIBS)
+LIBS = @LIBS@ $(EXTLIBS) `llvm-config --libs --system-libs` -lstdc++
 MISSING = @LIBOBJS@ @ALLOCA@
 LDSHARED = @LIBRUBY_LDSHARED@
 DLDFLAGS = @LIBRUBY_DLDFLAGS@ $(XLDFLAGS) $(ARCH_FLAG)
@@ -361,6 +361,10 @@ enc/jis/props.h: enc/jis/props.kwd
 	  $(CP) $? $(?:.kwd=.src) && \
 	  $(CP) $@ $(?:.kwd=.h.blt); \
 	fi
+
+jit.o: jit.c
+	@$(ECHO) compiling $<
+	$(CC) $(CFLAGS) $(XCFLAGS) $(CPPFLAGS) $(COUTFLAG)$@ `llvm-config --cflags` -c $<
 
 .c.@OBJEXT@:
 	@$(ECHO) compiling $<
